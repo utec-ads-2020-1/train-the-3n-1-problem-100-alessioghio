@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -16,40 +15,34 @@ vector<int> getRange(int firstNum, int lastNum);
 
 int main(){
     string myLine;
-    ifstream myfile ("input.txt");
-    stringstream ss;
     int i,j;
     vector<int> resPerInput;
     pair<int, int> tempCount;
     int maxNum;
-    if (myfile.is_open()){
-        while(getline(myfile, myLine)){
-            ss << myLine;
-            ss >> i >> j;
-            vector<int> rangeVec = getRange(i,j);
-            if(rangeVec.size()%2==0){
-                for (int i = 0; i < rangeVec.size(); i+=2){
-                    tempCount = process2Nums(rangeVec[i],rangeVec[i+1]);
-                    resPerInput.push_back(tempCount.first);
-                    resPerInput.push_back(tempCount.second);
-                }                
-            }else{
-                for (int i = 0; i < rangeVec.size()-1; i+=2){
-                    tempCount = process2Nums(rangeVec[i],rangeVec[i+1]);
-                    resPerInput.push_back(tempCount.first);
-                    resPerInput.push_back(tempCount.second);
-                }
-                tempCount = process2Nums(rangeVec[rangeVec.size()-1],1);
+    while(getline(cin, myLine)){
+        istringstream ss(myLine);
+        ss >> i >> j;
+        vector<int> rangeVec = getRange(i,j);
+        if(rangeVec.size()%2==0){
+            for (int i = 0; i < rangeVec.size(); i+=2){
+                tempCount = process2Nums(rangeVec[i],rangeVec[i+1]);
                 resPerInput.push_back(tempCount.first);
+                resPerInput.push_back(tempCount.second);
+            }                
+        }else{
+            for (int i = 0; i < rangeVec.size()-1; i+=2){
+                tempCount = process2Nums(rangeVec[i],rangeVec[i+1]);
+                resPerInput.push_back(tempCount.first);
+                resPerInput.push_back(tempCount.second);
             }
-            maxNum = *(max_element(resPerInput.begin(), resPerInput.end()));
-            cout << i << " " << j << " " << maxNum << endl;
-            resPerInput.clear();
-            ss.clear();
+            tempCount = process2Nums(rangeVec[rangeVec.size()-1],1);
+            resPerInput.push_back(tempCount.first);
         }
-    }else{
-        cout << "Unable to open file";
-    }
+        maxNum = *(max_element(resPerInput.begin(), resPerInput.end()));
+        cout << i << " " << j << " " << maxNum << endl;
+        resPerInput.clear();
+        ss.clear();
+        }
     
     return EXIT_SUCCESS;
 }
