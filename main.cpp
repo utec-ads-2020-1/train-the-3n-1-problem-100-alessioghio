@@ -19,10 +19,9 @@ int main(){
     ifstream myfile ("input.txt");
     stringstream ss;
     int i,j;
-    vector<pair<int, int>> inputs;
     vector<int> resPerInput;
     pair<int, int> tempCount;
-    vector<int> results;
+    int maxNum;
     if (myfile.is_open()){
         while(getline(myfile, myLine)){
             ss << myLine;
@@ -43,16 +42,13 @@ int main(){
                 tempCount = process2Nums(rangeVec[rangeVec.size()-1],1);
                 resPerInput.push_back(tempCount.first);
             }
-            results.push_back(*(max_element(resPerInput.begin(), resPerInput.end())));
-            inputs.push_back(make_pair(i, j));
+            maxNum = *(max_element(resPerInput.begin(), resPerInput.end()));
+            cout << i << " " << j << " " << maxNum << endl;
             resPerInput.clear();
             ss.clear();
         }
     }else{
         cout << "Unable to open file";
-    }
-    for(int i = 0; i < results.size(); i++){
-        cout << inputs[i].first << " " << inputs[i].second << " " << results[i] << endl;
     }
     
     return EXIT_SUCCESS;
@@ -143,5 +139,4 @@ vector<int> getRange(int firstNum, int lastNum){
         rangeVec.push_back(iter);
     }
     return rangeVec;
-    
 }
